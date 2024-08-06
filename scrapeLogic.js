@@ -39,7 +39,8 @@ const scrapeLogic = async (res) => {
     
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
-                   await page.waitForFunction(() =>
+    console.log('aaa');
+              await page.waitForFunction(() =>
             Array.from(document.querySelectorAll('button, a'))
                 .some(el => el.textContent.trim() === 'Accept all')
         );
@@ -50,9 +51,10 @@ const scrapeLogic = async (res) => {
                 .find(el => el.textContent.trim() === 'Accept all');
             if (button) {
                 button.click();
+              console.log('bb');
             }
         });
-    
+      console.log('cc');
                 // Wait for the element containing the text to load
                 await page.waitForSelector('.woNBXVXX');
 
@@ -61,7 +63,7 @@ const scrapeLogic = async (res) => {
                 // Replace '.target-element-class' with the actual class, id, or selector of the element
                 return document.querySelector('.woNBXVXX').innerText;
                 });
-
+  console.log('dd');
                 console.log('Extracted Text:', text);
                 await page.keyboard.press('Escape');
                 await page.keyboard.press('Escape');
