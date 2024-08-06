@@ -4,7 +4,6 @@ require("dotenv").config();
 const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
     headless: false,
-        userDataDir: '/tmp/user-data-diret5',
         defaultViewport: null,
         args: ['--start-maximized'],
           
