@@ -21,7 +21,7 @@ const scrapeLogic = async (res) => {
   });
   try {
     const page = await browser.newPage();
-const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T' ;
+    const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T' ;
     // await page.goto("https://elements.envato.com/logotype-modern-logo-font-4X4ER6T");
     
         await page.authenticate({
@@ -39,7 +39,19 @@ const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T' ;
     
     // Set screen size
     await page.setViewport({ width: 1080, height: 1024 });
+                   await page.waitForFunction(() =>
+            Array.from(document.querySelectorAll('button, a'))
+                .some(el => el.textContent.trim() === 'Accept all')
+        );
 
+        // Click the button with text 'Accept all'
+        await page.evaluate(() => {
+            const button = Array.from(document.querySelectorAll('button, a'))
+                .find(el => el.textContent.trim() === 'Accept all');
+            if (button) {
+                button.click();
+            }
+        });
     
                 // Wait for the element containing the text to load
                 await page.waitForSelector('.woNBXVXX');
