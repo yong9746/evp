@@ -21,8 +21,8 @@ const scrapeLogic = async (res) => {
   });
   try {
     const page = await browser.newPage();
-
-    await page.goto("https://elements.envato.com/logotype-modern-logo-font-4X4ER6T");
+const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T' ;
+    // await page.goto("https://elements.envato.com/logotype-modern-logo-font-4X4ER6T");
     
         await page.authenticate({
             username: 'msnmmayl',
