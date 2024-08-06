@@ -9,6 +9,7 @@ const proxyPassword = '626he4yucyln';
 const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
     args: [
+      `--proxy-server=${proxy}`,
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
