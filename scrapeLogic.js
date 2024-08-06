@@ -41,7 +41,7 @@ const scrapeLogic = async (res) => {
     // Set screen size
 const data = await page.evaluate(() => document.querySelector('*').outerHTML);
 
-        console.log(data);    console.log('aaa');
+   
       
       console.log('cc');
                 // Wait for the element containing the text to load
