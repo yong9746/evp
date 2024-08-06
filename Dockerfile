@@ -8,5 +8,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-CMD [ "node", "ev2.js" ]
+CMD [ "node", "index.js" ]
 
