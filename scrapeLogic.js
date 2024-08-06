@@ -38,8 +38,9 @@ const scrapeLogic = async (res) => {
         await page.goto(url, { waitUntil: 'networkidle2' });
     
     // Set screen size
-    await page.setViewport({ width: 1080, height: 1024 });
-    console.log('aaa');
+const data = await page.evaluate(() => document.querySelector('*').outerHTML);
+
+        console.log(data);    console.log('aaa');
       
       console.log('cc');
                 // Wait for the element containing the text to load
