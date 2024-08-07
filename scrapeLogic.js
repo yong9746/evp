@@ -38,7 +38,7 @@ const scrapeLogic = async (res) => {
           domain: '.elements.envato.com', // Adjust the domain to match the target site
         });
      console.log('Page loaded2');
-        const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T';
+        const url = 'https://google.com';
         await page.goto(url, { waitUntil: 'networkidle2' });
     
         console.log('Page loaded');
