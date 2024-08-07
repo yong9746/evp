@@ -38,7 +38,7 @@ console.log('cc4');
             value: 'N29OSTN2ZDFWdmZjc1UvQ2lMYkxJRkRhUjlTcS8vVjRqd1FhdWFIRWVZTEdnUklWWXpLNGdRVnlvdnl5UzUrWE9MSGJPQm1aNlVjcTllTEJpaWJnR1VBQUlPUUFVL05NU09qUU5ZZ3RCVTVWdm9OQU5HV1VNS0pPQmtyOFIrZkE3ZG5JcG9HRktXZ1dvUE43RENmTHNBOXJwV0U3STViUmpCbkYvQk56R2RiNFBKQU9YSWphUWVXWW5MR2VwRm9tUVR5LzFlZjIxc2VvZmpnSE1sREFVUDI2dFlPNXdzbFpoVXRPczF5ZjlEdldkTUR3Nm9LeFlHRGJoMVBtNzNLZlJmMXZYU21IWDkyczhJRlBLbldNZTAycW9TWUU2Z2ExeVpkUDQ2TEZjemFJcmUrM0lPYWlPbE9UOWc4WSt5Y2dSUEFwQ3dTRFFDUnRwY1o2a2lOallxMUJidVYrRFQvUG9teit3OUVRNW9YclB5OTFVVmVFNGpYRFJTckRxMlJNZlZZOHNLV0pFdytKT24yeC9icnlwdz09LS0wVzBNT0JSK05Nd1l2UkFjWEh6Qk1BPT0%3D--6737668aa4ecd5c6513b72e3df24e62c12a232de',
             domain: '.elements.envato.com', // Adjust the domain to match the target site
         });
-       // await page.goto(url, { waitUntil: 'networkidle2' });
+        await page.goto(url, { waitUntil: 'networkidle2' });
     console.log('cc2');
     // Set screen size
 // const data = await page.evaluate(() => document.querySelector('*').outerHTML);
@@ -71,20 +71,8 @@ console.log('cc4');
                 await page.click('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
 
                 console.log('Button clicked!');
-
-   await page.waitForFunction(() =>
-        Array.from(document.querySelectorAll('button, a'))
-            .some(el => el.textContent.trim() === 'Accept all')
-    );
-
-    // Click the button with text 'Accept all'
-    await page.evaluate(() => {
-        const button = Array.from(document.querySelectorAll('button, a'))
-            .find(el => el.textContent.trim() === 'Accept all');
-        if (button) {
-            button.click();
-        }
-    });
+  await page.screenshot({ path: '/tmp/screenshot.png' });
+ 
   console.log('ee');
     
             // Wait for the button to be available in the DOM
