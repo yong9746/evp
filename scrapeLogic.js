@@ -11,8 +11,6 @@ const scrapeLogic = async (res) => {
     headless: true,
     args: [
       `--proxy-server=${proxy}`,
-      "--disable-setuid-sandbox",
-      "--no-sandbox"
      
     ],
     executablePath:
