@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 require("dotenv").config();
 
 
-const proxy = 'http://23.247.105.131:5195';
+const proxy = 'http://104.223.227.145:6668';
 const proxyUsername = 'msnmmayl';
 const proxyPassword = '626he4yucyln';
 
@@ -10,7 +10,7 @@ const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
     headless: true,
     args: [
-      --proxy-server=${proxy},
+      `--proxy-server=${proxy}`,
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
@@ -109,7 +109,7 @@ console.log('cc4');
     res.send('gg');
   } catch (e) {
     console.error(e);
-    res.send(Something went wrong while running Puppeteer: ${e});
+    res.send(`Something went wrong while running Puppeteer: ${e}`);
   } finally {
     await browser.close();
   }
