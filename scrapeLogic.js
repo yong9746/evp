@@ -39,6 +39,8 @@ console.log('cc4');
             domain: '.elements.envato.com', // Adjust the domain to match the target site
         });
       console.log('cco');
+     const data = await page.evaluate(() => document.querySelector('*').outerHTML);
+    console.log(data);
         await page.goto(url, { waitUntil: 'networkidle2' });
     console.log('cc2');
     // Set screen size
