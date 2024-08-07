@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 require("dotenv").config();
 
 
-const proxy = 'http://104.223.227.145:6668';
+const proxy = 'http://23.247.105.131:5195';
 const proxyUsername = 'msnmmayl';
 const proxyPassword = '626he4yucyln';
 
