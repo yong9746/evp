@@ -72,8 +72,20 @@ console.log('cc4');
 
                 console.log('Button clicked!');
 
-           const data = await page.evaluate(() => document.querySelector('*').outerHTML);
-          console.log(data);
+   await page.waitForFunction(() =>
+        Array.from(document.querySelectorAll('button, a'))
+            .some(el => el.textContent.trim() === 'Accept all')
+    );
+
+    // Click the button with text 'Accept all'
+    await page.evaluate(() => {
+        const button = Array.from(document.querySelectorAll('button, a'))
+            .find(el => el.textContent.trim() === 'Accept all');
+        if (button) {
+            button.click();
+        }
+    });
+  console.log('ee');
     
             // Wait for the button to be available in the DOM
             await page.waitForSelector('[data-testid="download-without-license-button"]');
