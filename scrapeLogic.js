@@ -93,6 +93,8 @@ const scrapeLogic = async (res) => {
             // Log the URL
             console.log('Intercepted request URL:', url);
             // Abort the request
+                 res.send(url);
+
             request.abort();
           } else {
             // Allow the request to continue
