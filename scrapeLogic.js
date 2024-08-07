@@ -22,7 +22,7 @@ const scrapeLogic = async (res) => {
         : puppeteer.executablePath(),
   });
   try {
-   console.log('Browser launched');
+    console.log('Browser launched');
         const page = await browser.newPage();
         
         // Authenticate proxy
@@ -43,7 +43,8 @@ const scrapeLogic = async (res) => {
         const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T';
         await page.goto(url, { waitUntil: 'networkidle2' });
     
-        console.log('Page loaded');
+
+   console.log('Page loaded');
     
         await page.waitForFunction(() =>
             Array.from(document.querySelectorAll('button, a'))
@@ -102,13 +103,15 @@ const scrapeLogic = async (res) => {
             request.continue();
           }
         });
-      } catch (e) {
-        console.error('Error:', e);
-        console.log(`Something went wrong while running Puppeteer: ${e}`);
-      } finally {
-        await browser.close();
-      }
 
+    // Print the full title
+    res.send('gg');
+  } catch (e) {
+    console.error(e);
+    res.send(Something went wrong while running Puppeteer: ${e});
+  } finally {
+    await browser.close();
+  }
 };
 
 module.exports = { scrapeLogic };
