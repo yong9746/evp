@@ -49,19 +49,19 @@ const scrapeLogic = async (res) => {
 
     console.log('Page loaded');
 
-    await page.waitForFunction(() =>
-      Array.from(document.querySelectorAll('button, a'))
-        .some(el => el.textContent.trim() === 'Accept all')
-    );
+    // await page.waitForFunction(() =>
+    //   Array.from(document.querySelectorAll('button, a'))
+    //     .some(el => el.textContent.trim() === 'Accept all')
+    // );
 
-    // Click the button with text 'Accept all'
-    await page.evaluate(() => {
-      const button = Array.from(document.querySelectorAll('button, a'))
-        .find(el => el.textContent.trim() === 'Accept all');
-      if (button) {
-        button.click();
-      }
-    });
+    // // Click the button with text 'Accept all'
+    // await page.evaluate(() => {
+    //   const button = Array.from(document.querySelectorAll('button, a'))
+    //     .find(el => el.textContent.trim() === 'Accept all');
+    //   if (button) {
+    //     button.click();
+    //   }
+    // });
 
     // Wait for the element containing the text to load
     await page.waitForSelector('.woNBXVXX');
