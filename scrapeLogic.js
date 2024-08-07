@@ -39,7 +39,7 @@ const scrapeLogic = async (res) => {
         await page.goto(url, { waitUntil: 'networkidle2' });
     
     // Set screen size
-const data = await page.evaluate(() => document.querySelector('*').outerHTML);
+// const data = await page.evaluate(() => document.querySelector('*').outerHTML);
 
    
       
