@@ -71,8 +71,9 @@ console.log('cc4');
 
                 console.log('Button clicked!');
 
-   
-
+           const data = await page.evaluate(() => document.querySelector('*').outerHTML);
+          console.log(data);
+    
             // Wait for the button to be available in the DOM
             await page.waitForSelector('[data-testid="download-without-license-button"]');
             console.log('Button clicked2!');
