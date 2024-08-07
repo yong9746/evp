@@ -8,7 +8,7 @@ const proxyPassword = '626he4yucyln';
 
 const scrapeLogic = async (res) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     args: [
       `--proxy-server=${proxy}`,
      
@@ -21,6 +21,7 @@ const scrapeLogic = async (res) => {
   try {
    console.log('Browser launched');
         const page = await browser.newPage();
+        await page.setViewport({ width: 1280, height: 800 });
         
         // Authenticate proxy
         await page.authenticate({
@@ -56,7 +57,6 @@ const scrapeLogic = async (res) => {
             }
         });
         // Set screen size (optional)
-        await page.setViewport({ width: 1280, height: 800 });
     
         // Wait for the element containing the text to load
         await page.waitForSelector('.woNBXVXX');
