@@ -38,7 +38,7 @@ const scrapeLogic = async (res) => {
           domain: '.elements.envato.com', // Adjust the domain to match the target site
         });
      console.log('Page loaded2');
-        const url = 'https://google.com';
+        const url = 'https://elements.envato.com/portrait-of-happy-beautiful-young-blonde-female-ly-J455WNK';
         await page.goto(url, { waitUntil: 'networkidle2' });
     
         console.log('Page loaded');
