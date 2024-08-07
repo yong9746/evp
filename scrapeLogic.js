@@ -12,9 +12,8 @@ const scrapeLogic = async (res) => {
     args: [
       `--proxy-server=${proxy}`,
       "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--single-process",
-      "--no-zygote",
+      "--no-sandbox"
+     
     ],
     executablePath:
       process.env.NODE_ENV === "production"
