@@ -21,6 +21,7 @@ const scrapeLogic = async (res) => {
         : puppeteer.executablePath(),
   });
   try {
+     console.log('cc1');
     const page = await browser.newPage();
     const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T' ;
     // await page.goto("https://elements.envato.com/logotype-modern-logo-font-4X4ER6T");
@@ -29,7 +30,7 @@ const scrapeLogic = async (res) => {
             username: 'msnmmayl',
             password: '626he4yucyln',
           });
-
+console.log('cc4');
            // Set cookies
         await page.setCookie({
             name: '_elements_session_4',
@@ -37,7 +38,7 @@ const scrapeLogic = async (res) => {
             domain: '.elements.envato.com', // Adjust the domain to match the target site
         });
         await page.goto(url, { waitUntil: 'networkidle2' });
-    
+    console.log('cc2');
     // Set screen size
 // const data = await page.evaluate(() => document.querySelector('*').outerHTML);
 
