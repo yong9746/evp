@@ -49,19 +49,24 @@ const scrapeLogic = async (res) => {
 
     console.log('Page loaded');
 
-    await page.waitForFunction(() =>
-      Array.from(document.querySelectorAll('button, a'))
-        .some(el => el.textContent.trim() === 'Accept all')
-    );
-
-    // Click the button with text 'Accept all'
-    await page.evaluate(() => {
-      const button = Array.from(document.querySelectorAll('button, a'))
-        .find(el => el.textContent.trim() === 'Accept all');
-      if (button) {
-        button.click();
-      }
-    });
+    // Try to find and click the "Accept all" button
+    try {
+      await page.waitForFunction(() =>
+        Array.from(document.querySelectorAll('button, a'))
+          .some(el => el.textContent.trim() === 'Accept all'),
+        { timeout: 5000 } // Adjust timeout as needed
+      );
+      await page.evaluate(() => {
+        const button = Array.from(document.querySelectorAll('button, a'))
+          .find(el => el.textContent.trim() === 'Accept all');
+        if (button) {
+          button.click();
+        }
+      });
+      console.log('"Accept all" button clicked');
+    } catch (e) {
+      console.log('"Accept all" button not found, continuing');
+    }
 
     // Wait for the element containing the text to load
     await page.waitForSelector('.woNBXVXX');
