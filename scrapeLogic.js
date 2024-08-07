@@ -1,8 +1,7 @@
 const puppeteer = require("puppeteer");
 require("dotenv").config();
 
-
-const proxy = 'http://104.223.227.145:6668';
+const proxy = 'http://23.247.105.131:5195';
 const proxyUsername = 'msnmmayl';
 const proxyPassword = '626he4yucyln';
 
@@ -22,93 +21,73 @@ const scrapeLogic = async (res) => {
         : puppeteer.executablePath(),
   });
   try {
-     console.log('cc1');
+    console.log('Browser launched');
     const page = await browser.newPage();
-    const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T' ;
-    // await page.goto("https://elements.envato.com/logotype-modern-logo-font-4X4ER6T");
     
-        await page.authenticate({
-            username: 'msnmmayl',
-            password: '626he4yucyln',
-          });
-console.log('cc4');
-           // Set cookies
-        await page.setCookie({
-            name: '_elements_session_4',
-            value: 'N29OSTN2ZDFWdmZjc1UvQ2lMYkxJRkRhUjlTcS8vVjRqd1FhdWFIRWVZTEdnUklWWXpLNGdRVnlvdnl5UzUrWE9MSGJPQm1aNlVjcTllTEJpaWJnR1VBQUlPUUFVL05NU09qUU5ZZ3RCVTVWdm9OQU5HV1VNS0pPQmtyOFIrZkE3ZG5JcG9HRktXZ1dvUE43RENmTHNBOXJwV0U3STViUmpCbkYvQk56R2RiNFBKQU9YSWphUWVXWW5MR2VwRm9tUVR5LzFlZjIxc2VvZmpnSE1sREFVUDI2dFlPNXdzbFpoVXRPczF5ZjlEdldkTUR3Nm9LeFlHRGJoMVBtNzNLZlJmMXZYU21IWDkyczhJRlBLbldNZTAycW9TWUU2Z2ExeVpkUDQ2TEZjemFJcmUrM0lPYWlPbE9UOWc4WSt5Y2dSUEFwQ3dTRFFDUnRwY1o2a2lOallxMUJidVYrRFQvUG9teit3OUVRNW9YclB5OTFVVmVFNGpYRFJTckRxMlJNZlZZOHNLV0pFdytKT24yeC9icnlwdz09LS0wVzBNT0JSK05Nd1l2UkFjWEh6Qk1BPT0%3D--6737668aa4ecd5c6513b72e3df24e62c12a232de',
-            domain: '.elements.envato.com', // Adjust the domain to match the target site
-        });
-      console.log('cco');
-     const data = await page.evaluate(() => document.querySelector('*').outerHTML);
-    console.log(data);
-        await page.goto(url, { waitUntil: 'networkidle2' });
-    console.log('cc2');
-    // Set screen size
-// const data = await page.evaluate(() => document.querySelector('*').outerHTML);
+    // Authenticate proxy
+    await page.authenticate({
+      username: proxyUsername,
+      password: proxyPassword,
+    });
 
-   
-      
-      console.log('cc');
-                // Wait for the element containing the text to load
-                await page.waitForSelector('.woNBXVXX');
+  
 
-                // Extract the text content
-                const text = await page.evaluate(() => {
-                // Replace '.target-element-class' with the actual class, id, or selector of the element
-                return document.querySelector('.woNBXVXX').innerText;
-                });
-  console.log('dd');
-                console.log('Extracted Text:', text);
-                await page.keyboard.press('Escape');
-                await page.keyboard.press('Escape');
-                await page.keyboard.press('Escape');
-                await page.keyboard.press('Escape');
-                await page.keyboard.press('Escape');
-                await page.keyboard.press('Escape');
+    // Set cookies
+    await page.setCookie({
+      name: '_elements_session_4',
+      value: 'N29OSTN2ZDFWdmZjc1UvQ2lMYkxJRkRhUjlTcS8vVjRqd1FhdWFIRWVZTEdnUklWWXpLNGdRVnlvdnl5UzUrWE9MSGJPQm1aNlVjcTllTEJpaWJnR1VBQUlPUUFVL05NU09qUU5ZZ3RCVTVWdm9OQU5HV1VNS0pPQmtyOFIrZkE3ZG5JcG9HRktXZ1dvUE43RENmTHNBOXJwV0U3STViUmpCbkYvQk56R2RiNFBKQU9YSWphUWVXWW5MR2VwRm9tUVR5LzFlZjIxc2VvZmpnSE1sREFVUDI2dFlPNXdzbFpoVXRPczF5ZjlEdldkTUR3Nm9LeFlHRGJoMVBtNzNLZlJmMXZYU21IWDkyczhJRlBLbldNZTAycW9TWUU2Z2ExeVpkUDQ2TEZjemFJcmUrM0lPYWlPbE9UOWc4WSt5Y2dSUEFwQ3dTRFFDUnRwY1o2a2lOallxMUJidVYrRFQvUG9teit3OUVRNW9YclB5OTFVVmVFNGpYRFJTckRxMlJNZlZZOHNLV0pFdytKT24yeC9icnlwdz09LS0wVzBNT0JSK05Nd1l2UkFjWEh6Qk1BPT0%3D--6737668aa4ecd5c6513b72e3df24e62c12a232de',
+      domain: '.elements.envato.com', // Adjust the domain to match the target site
+    });
 
+    const url = 'https://elements.envato.com/logotype-modern-logo-font-4X4ER6T';
+    await page.goto(url, { waitUntil: 'networkidle2' });
 
-                // Wait for the button to be available in the DOM
-                await page.waitForSelector('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
+    console.log('Page loaded');
 
-                // Click the button
-                await page.click('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
+    // Set screen size (optional)
+    await page.setViewport({ width: 1280, height: 800 });
 
-                console.log('Button clicked!');
-  await page.screenshot({ path: '/tmp/screenshot.png' });
- 
-  console.log('ee');
-    
-            // Wait for the button to be available in the DOM
-            await page.waitForSelector('[data-testid="download-without-license-button"]');
-            console.log('Button clicked2!');
+    // Wait for the element containing the text to load
+    await page.waitForSelector('.woNBXVXX');
 
-            // Click the button
-            await page.click('[data-testid="download-without-license-button"]');
+    // Extract the text content
+    const text = await page.evaluate(() => {
+      return document.querySelector('.woNBXVXX').innerText;
+    });
 
-            console.log('Button clicked22!');
+    console.log('Extracted Text:', text);
 
+    // Click the button
+    await page.click('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
+    console.log('Button clicked!');
 
-                // Set up request interception
-                await page.setRequestInterception(true);
+    // Take a screenshot
+    await page.screenshot({ path: '/tmp/screenshot.png' });
+    console.log('Screenshot saved');
 
-                page.on('request', request => {
-                    const url = request.url();
-                    if (url.includes('envatousercontent.com')) {
-                        // Log the URL
-                        console.log('Intercepted request URL:', url);
-            
-                        // Abort the request
-                        request.abort();
-                    } else {
-                        // Allow the request to continue
-                        request.continue();
-                    }
-                });
+    // Wait for the download button and click it
+    await page.waitForSelector('[data-testid="download-without-license-button"]');
+    await page.click('[data-testid="download-without-license-button"]');
+    console.log('Download button clicked');
 
-    // Print the full title
-    res.send('gg');
+    // Send a response
+    res.send('Task completed successfully');
+  // Set up request interception
+    await page.setRequestInterception(true);
+    page.on('request', request => {
+      const url = request.url();
+      if (url.includes('envatousercontent.com')) {
+        // Log the URL
+        console.log('Intercepted request URL:', url);
+        // Abort the request
+        request.abort();
+      } else {
+        // Allow the request to continue
+        request.continue();
+      }
+    });
   } catch (e) {
-    console.error(e);
+    console.error('Error:', e);
     res.send(`Something went wrong while running Puppeteer: ${e}`);
   } finally {
     await browser.close();
