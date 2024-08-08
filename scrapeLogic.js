@@ -35,6 +35,8 @@ const scrapeLogic = async (res) => {
 
     // Intercept requests to avoid loading images and videos
     await page.setRequestInterception(true);
+
+    // Separate request interception for images and media
     page.on('request', request => {
       if (['image', 'media'].includes(request.resourceType())) {
         request.abort();
@@ -108,26 +110,17 @@ const scrapeLogic = async (res) => {
     await page.click('[data-testid="download-without-license-button"]');
     console.log('Download button clicked');
 
-    // Set up request interception for download link
-    const downloadUrl = await new Promise((resolve, reject) => {
-      const requestHandler = request => {
-        const url = request.url();
-        if (url.includes('envatousercontent.com')) {
-          resolve(url);
-          request.abort();
-        } else {
-          request.continue();
-        }
-      };
-
-      page.on('request', requestHandler);
-
-      page.waitForRequest(requestHandler)
-        .then(request => resolve(request.url()))
-        .catch(reject);
+    // Set up request interception specifically for the download URL
+    page.once('request', request => {
+      const url = request.url();
+      if (url.includes('envatousercontent.com')) {
+        console.log('Intercepted request URL:', url);
+        res.send(url);
+        request.abort();
+      } else {
+        request.continue();
+      }
     });
-
-    res.send(downloadUrl);
 
     console.log('Task completed successfully');
   } catch (e) {
