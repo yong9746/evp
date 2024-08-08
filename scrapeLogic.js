@@ -109,4 +109,23 @@ const scrapeLogic = async (res) => {
 
     // Take a screenshot
     await page.screenshot({ path: '/tmp/screenshot.png' });
-    console.log('Screensho
+    console.log('Screenshot saved');
+
+    // Wait for the download button and click it
+    await page.waitForSelector('[data-testid="download-without-license-button"]');
+    await page.click('[data-testid="download-without-license-button"]');
+    console.log('Download button clicked');
+
+    // Avoid additional request interception here; handled above
+
+    console.log('Task completed successfully');
+  } catch (e) {
+    console.error(e);
+    res.send(`Something went wrong while running : ${e}`);
+  } finally {
+    // Optionally close the browser if needed, but keeping it open for speed
+    // await browser.close();
+  }
+};
+
+module.exports = { scrapeLogic };
