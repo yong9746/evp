@@ -1,5 +1,5 @@
-const puppeteer = require('puppeteer');
-require('dotenv').config();
+const puppeteer = require("puppeteer");
+require("dotenv").config();
 
 const proxy = 'http://23.247.105.131:5195';
 const proxyUsername = 'msnmmayl';
@@ -11,18 +11,15 @@ const initializeBrowser = async () => {
   if (!browser) {
     browser = await puppeteer.launch({
       headless: true,
-      args: [
-        `--proxy-server=${proxy}`,
-        '--disable-images',
-        '--disable-media'
-      ],
-      executablePath: process.env.NODE_ENV === 'production'
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
+      args: [`--proxy-server=${proxy}`],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
     });
     console.log('Browser initialized');
   }
-  console.log('Browser initialized2');
+   console.log('Browser initialized2');
   return browser;
 };
 
@@ -31,17 +28,7 @@ const scrapeLogic = async (res) => {
     const browser = await initializeBrowser();
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
-
-    // Intercept requests to avoid loading images and videos
-    await page.setRequestInterception(true);
-    page.on('request', request => {
-      if (['image', 'media'].includes(request.resourceType())) {
-        request.abort();
-      } else {
-        request.continue();
-      }
-    });
-
+    
     // Authenticate proxy
     await page.authenticate({
       username: proxyUsername,
@@ -108,6 +95,7 @@ const scrapeLogic = async (res) => {
     console.log('Download button clicked');
 
     // Set up request interception
+    await page.setRequestInterception(true);
     page.on('request', request => {
       const url = request.url();
       if (url.includes('envatousercontent.com')) {
