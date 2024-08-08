@@ -33,18 +33,23 @@ const scrapeLogic = async (res) => {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
 
-    // Request interception to handle images and media
+    // Set up request interception
     await page.setRequestInterception(true);
 
-    const handleRequest = request => {
+    let intercepted = false;
+
+    page.on('request', request => {
       if (['image', 'media'].includes(request.resourceType())) {
+        request.abort();
+      } else if (!intercepted && request.url().includes('envatousercontent.com')) {
+        intercepted = true; // Mark interception as done
+        console.log('Intercepted request URL:', request.url());
+        res.send(request.url());
         request.abort();
       } else {
         request.continue();
       }
-    };
-
-    page.on('request', handleRequest);
+    });
 
     // Authenticate proxy
     await page.authenticate({
@@ -104,39 +109,4 @@ const scrapeLogic = async (res) => {
 
     // Take a screenshot
     await page.screenshot({ path: '/tmp/screenshot.png' });
-    console.log('Screenshot saved');
-
-    // Wait for the download button and click it
-    await page.waitForSelector('[data-testid="download-without-license-button"]');
-    await page.click('[data-testid="download-without-license-button"]');
-    console.log('Download button clicked');
-
-    // Set up request interception specifically for the download URL
-    const downloadUrlPromise = new Promise((resolve, reject) => {
-      page.once('request', request => {
-        const url = request.url();
-        if (url.includes('envatousercontent.com')) {
-          console.log('Intercepted request URL:', url);
-          resolve(url);
-          request.abort();
-        } else {
-          request.continue();
-        }
-      });
-    });
-
-    // Wait for the download URL
-    const downloadUrl = await downloadUrlPromise;
-    res.send(downloadUrl);
-
-    console.log('Task completed successfully');
-  } catch (e) {
-    console.error(e);
-    res.send(`Something went wrong while running : ${e}`);
-  } finally {
-    // Optionally close the browser if needed, but keeping it open for speed
-    // await browser.close();
-  }
-};
-
-module.exports = { scrapeLogic };
+    console.log('Screensho
