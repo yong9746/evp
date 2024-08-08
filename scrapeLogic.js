@@ -11,9 +11,11 @@ const initializeBrowser = async () => {
   if (!browser) {
     browser = await puppeteer.launch({
       headless: true,
-      args: [`--proxy-server=${proxy}`,
-             '--disable-images',
-            '--disable-media'],
+      args: [
+        `--proxy-server=${proxy}`,
+        '--disable-images',
+        '--disable-media'
+      ],
       executablePath:
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
@@ -21,7 +23,7 @@ const initializeBrowser = async () => {
     });
     console.log('Browser initialized');
   }
-   console.log('Browser initialized2');
+  console.log('Browser initialized2');
   return browser;
 };
 
@@ -30,8 +32,8 @@ const scrapeLogic = async (res) => {
     const browser = await initializeBrowser();
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
-    
-       // Intercept requests to avoid loading images and videos
+
+    // Intercept requests to avoid loading images and videos
     await page.setRequestInterception(true);
     page.on('request', request => {
       if (['image', 'media'].includes(request.resourceType())) {
@@ -40,6 +42,7 @@ const scrapeLogic = async (res) => {
         request.continue();
       }
     });
+
     // Authenticate proxy
     await page.authenticate({
       username: proxyUsername,
@@ -105,21 +108,26 @@ const scrapeLogic = async (res) => {
     await page.click('[data-testid="download-without-license-button"]');
     console.log('Download button clicked');
 
-    // Set up request interception
-    page.on('request', request => {
-      const url = request.url();
-      if (url.includes('envatousercontent.com')) {
-        // Log the URL
-        console.log('Intercepted request URL:', url);
-        // Send the intercepted URL as response
-        res.send(url);
-        // Abort the request
-        request.abort();
-      } else {
-        // Allow the request to continue
-        request.continue();
-      }
+    // Set up request interception for download link
+    const downloadUrl = await new Promise((resolve, reject) => {
+      const requestHandler = request => {
+        const url = request.url();
+        if (url.includes('envatousercontent.com')) {
+          resolve(url);
+          request.abort();
+        } else {
+          request.continue();
+        }
+      };
+
+      page.on('request', requestHandler);
+
+      page.waitForRequest(requestHandler)
+        .then(request => resolve(request.url()))
+        .catch(reject);
     });
+
+    res.send(downloadUrl);
 
     console.log('Task completed successfully');
   } catch (e) {
