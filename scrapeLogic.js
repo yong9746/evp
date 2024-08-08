@@ -11,7 +11,9 @@ const initializeBrowser = async () => {
   if (!browser) {
     browser = await puppeteer.launch({
       headless: true,
-      args: [`--proxy-server=${proxy}`],
+      args: [`--proxy-server=${proxy}`,
+             '--disable-images',
+            '--disable-media'],
       executablePath:
         process.env.NODE_ENV === "production"
           ? process.env.PUPPETEER_EXECUTABLE_PATH
@@ -29,6 +31,15 @@ const scrapeLogic = async (res) => {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
     
+       // Intercept requests to avoid loading images and videos
+    await page.setRequestInterception(true);
+    page.on('request', request => {
+      if (['image', 'media'].includes(request.resourceType())) {
+        request.abort();
+      } else {
+        request.continue();
+      }
+    });
     // Authenticate proxy
     await page.authenticate({
       username: proxyUsername,
@@ -114,7 +125,7 @@ const scrapeLogic = async (res) => {
     console.log('Task completed successfully');
   } catch (e) {
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
+    res.send(`Something went wrong while running : ${e}`);
   } finally {
     // Optionally close the browser if needed, but keeping it open for speed
     // await browser.close();
