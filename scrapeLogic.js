@@ -14,7 +14,8 @@ const initializeBrowser = async () => {
       args: [
         `--proxy-server=${proxy}`,
         '--disable-images',
-        '--disable-media'
+        '--disable-media',
+        '--disable-gpu'
       ],
       executablePath:
         process.env.NODE_ENV === "production"
