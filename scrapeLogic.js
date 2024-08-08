@@ -33,17 +33,18 @@ const scrapeLogic = async (res) => {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
 
-    // Intercept requests to avoid loading images and videos
+    // Request interception to handle images and media
     await page.setRequestInterception(true);
 
-    Separate request interception for images and media
-    page.on('request', request => {
+    const handleRequest = request => {
       if (['image', 'media'].includes(request.resourceType())) {
         request.abort();
       } else {
         request.continue();
       }
-    });
+    };
+
+    page.on('request', handleRequest);
 
     // Authenticate proxy
     await page.authenticate({
@@ -101,22 +102,32 @@ const scrapeLogic = async (res) => {
     await page.click('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
     console.log('Button clicked!');
 
+    // Take a screenshot
+    await page.screenshot({ path: '/tmp/screenshot.png' });
+    console.log('Screenshot saved');
+
     // Wait for the download button and click it
     await page.waitForSelector('[data-testid="download-without-license-button"]');
     await page.click('[data-testid="download-without-license-button"]');
     console.log('Download button clicked');
 
     // Set up request interception specifically for the download URL
-    page.once('request', request => {
-      const url = request.url();
-      if (url.includes('envatousercontent.com')) {
-        console.log('Intercepted request URL:', url);
-        res.send(url);
-        request.abort();
-      } else {
-        request.continue();
-      }
+    const downloadUrlPromise = new Promise((resolve, reject) => {
+      page.once('request', request => {
+        const url = request.url();
+        if (url.includes('envatousercontent.com')) {
+          console.log('Intercepted request URL:', url);
+          resolve(url);
+          request.abort();
+        } else {
+          request.continue();
+        }
+      });
     });
+
+    // Wait for the download URL
+    const downloadUrl = await downloadUrlPromise;
+    res.send(downloadUrl);
 
     console.log('Task completed successfully');
   } catch (e) {
