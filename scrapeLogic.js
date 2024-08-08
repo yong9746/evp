@@ -36,14 +36,14 @@ const scrapeLogic = async (res) => {
     // Intercept requests to avoid loading images and videos
     await page.setRequestInterception(true);
 
-    // Separate request interception for images and media
-    // page.on('request', request => {
-    //   if (['image', 'media'].includes(request.resourceType())) {
-    //     request.abort();
-    //   } else {
-    //     request.continue();
-    //   }
-    // });
+    Separate request interception for images and media
+    page.on('request', request => {
+      if (['image', 'media'].includes(request.resourceType())) {
+        request.abort();
+      } else {
+        request.continue();
+      }
+    });
 
     // Authenticate proxy
     await page.authenticate({
