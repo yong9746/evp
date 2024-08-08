@@ -19,6 +19,7 @@ const initializeBrowser = async () => {
     });
     console.log('Browser initialized');
   }
+   console.log('Browser initialized2');
   return browser;
 };
 
