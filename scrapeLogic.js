@@ -36,16 +36,17 @@ const scrapeLogic = async (res) => {
     // Set up request interception
     await page.setRequestInterception(true);
 
-    let intercepted = false;
+    
 
     page.on('request', request => {
       if (['image', 'media'].includes(request.resourceType())) {
         request.abort();
-      } else if (!intercepted && request.url().includes('envatousercontent.com')) {
-        intercepted = true; // Mark interception as done
+      } else if (request.url().includes('envatousercontent.com')) {
+ 
         console.log('Intercepted request URL:', request.url());
         res.send(request.url());
         request.abort();
+        return;
       } else {
         request.continue();
       }
