@@ -37,13 +37,13 @@ const scrapeLogic = async (res) => {
     await page.setRequestInterception(true);
 
     // Separate request interception for images and media
-    page.on('request', request => {
-      if (['image', 'media'].includes(request.resourceType())) {
-        request.abort();
-      } else {
-        request.continue();
-      }
-    });
+    // page.on('request', request => {
+    //   if (['image', 'media'].includes(request.resourceType())) {
+    //     request.abort();
+    //   } else {
+    //     request.continue();
+    //   }
+    // });
 
     // Authenticate proxy
     await page.authenticate({
@@ -100,10 +100,6 @@ const scrapeLogic = async (res) => {
     // Click the button
     await page.click('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
     console.log('Button clicked!');
-
-    // Take a screenshot
-    await page.screenshot({ path: '/tmp/screenshot.png' });
-    console.log('Screenshot saved');
 
     // Wait for the download button and click it
     await page.waitForSelector('[data-testid="download-without-license-button"]');
