@@ -108,9 +108,6 @@ const scrapeLogic = async (res) => {
     await page.click('.ncWzoxCr.WjwUaJcT.NWg5MVVe.METNYJBx');
     console.log('Button clicked!');
 
-    // Take a screenshot
-    await page.screenshot({ path: '/tmp/screenshot.png' });
-    console.log('Screenshot saved');
 
     // Wait for the download button and click it
     await page.waitForSelector('[data-testid="download-without-license-button"]');
