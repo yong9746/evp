@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 require('dotenv').config();
 
 const proxy = 'http://23.247.105.131:5195';
