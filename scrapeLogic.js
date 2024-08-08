@@ -106,7 +106,6 @@ const scrapeLogic = async (res) => {
     console.log('Download button clicked');
 
     // Set up request interception
-    await page.setRequestInterception(true);
     page.on('request', request => {
       const url = request.url();
       if (url.includes('envatousercontent.com')) {
