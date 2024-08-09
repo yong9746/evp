@@ -20,6 +20,7 @@ const initializeBrowser = async (proxy) => {
     console.log('Browser initialized');
   }
   console.log('Browser initialized2');
+  console.log(proxy);
   return browser;
 };
 
@@ -31,6 +32,7 @@ const scrapeLogic = async (res, url, cookieValue, proxy) => {
 
     // Set up request interception
     await page.setRequestInterception(true);
+  console.log(url);
 
     let intercepted = false;
 
