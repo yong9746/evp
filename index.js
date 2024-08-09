@@ -5,7 +5,8 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.get("/scrape", (req, res) => {
-  scrapeLogic(res);
+  const { url, cookieValue, proxy } = req.query;
+  scrapeLogic(res, url, cookieValue, proxy);
 });
 
 app.get("/", (req, res) => {
