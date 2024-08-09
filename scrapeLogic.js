@@ -1,6 +1,9 @@
 const puppeteer = require("puppeteer");
 require("dotenv").config();
 
+const proxyUsername = 'msnmmayl';
+const proxyPassword = '626he4yucyln';
+
 let browser; // Singleton browser instance
 
 const initializeBrowser = async (proxy) => {
@@ -8,7 +11,7 @@ const initializeBrowser = async (proxy) => {
     browser = await puppeteer.launch({
       headless: true,
       args: [
-        `--proxy-server=${proxy}`, // Use proxy passed as a parameter
+        `--proxy-server=${proxy}`,
         '--disable-images',
         '--disable-media'
       ],
@@ -20,7 +23,6 @@ const initializeBrowser = async (proxy) => {
     console.log('Browser initialized');
   }
   console.log('Browser initialized2');
-  console.log(proxy);
   return browser;
 };
 
@@ -32,21 +34,27 @@ const scrapeLogic = async (res, url, cookieValue, proxy) => {
 
     // Set up request interception
     await page.setRequestInterception(true);
-  console.log(url);
 
-    let intercepted = false;
+  
 
     page.on('request', request => {
       if (['image', 'media'].includes(request.resourceType())) {
         request.abort();
-      } else if (!intercepted && request.url().includes('envatousercontent.com')) {
+      } else if (request.url().includes('envatousercontent.com')) {
         intercepted = true; // Mark interception as done
         console.log('Intercepted request URL:', request.url());
         res.send(request.url());
         request.abort();
+        return;
       } else {
         request.continue();
       }
+    });
+
+    // Authenticate proxy
+    await page.authenticate({
+      username: proxyUsername,
+      password: proxyPassword,
     });
 
     console.log('Page loaded1');
