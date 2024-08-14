@@ -102,4 +102,4 @@ const scrapeLogic = async (res, url, cookieValue, proxy) => {
   }
 };
 
-module.exports = { scrapeLogic };
+module.exports = { scrapeLogic2 };
