@@ -12,7 +12,7 @@ app.get("/scrape", (req, res) => {
 
 app.get("/scrape2", (req, res) => {
   const { url, cookieValue, proxy } = req.query;
-  scrapeLogic(res, url, cookieValue, proxy);
+  scrapeLogic2(res, url, cookieValue, proxy);
 });
 
 
